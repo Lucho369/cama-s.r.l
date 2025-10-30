@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CAMA S.R.L.</title>
+  <link rel="stylesheet" href="../css/estilos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div id="header-container"></div>
+<main id="main-content" class="contacto-layout">
+  <section class="formulario-contacto">
+    <h2 style="color: #004080;">Contáctanos</h2>
+    <p>Puede enviarnos sus consultas a través del siguiente formulario:</p>
+    <form action="" method="post" class="form-grid">
+      <div>
+        <label>Nombre</label>
+        <input type="text" name="nombre" required>
+      </div>
+      <div>
+        <label>Apellidos</label>
+        <input type="text" name="apellidos" required>
+      </div>
+      <div>
+        <label>Email</label>
+        <input type="email" name="email" required>
+      </div>
+      <div>
+        <label>Teléfono / Celular</label>
+        <input type="tel" name="telefono">
+      </div>
+      <div>
+        <label>Ciudad</label>
+        <input type="text" name="ciudad">
+      </div>
+      <div>
+        <label>País</label>
+        <input type="text" name="pais">
+      </div>
+      <div class="mensaje-box">
+        <label>Mensaje</label>
+        <textarea name="mensaje" rows="5" required></textarea>
+      </div>
+      <div class="captcha-box">
+        <div class="g-recaptcha" data-sitekey="TU_CLAVE_PUBLICA_RECAPTCHA"></div>
+      </div>
+      <div class="submit-box">
+        <button type="submit" class="boton-amarillo">Enviar Mensaje</button>
+      </div>
+    </form>
+  </section>
+  <aside class="info-contacto">
+    <h2 style="color: #004080;">Información de Contacto</h2>
+    <h3>Cobija</h3>
+    <p><i class="fa-solid fa-location-dot"></i> Tienda <br>
+    Calle defensores de, Cobija </p>
+    <p><i class="fa-solid fa-phone"></i> +591 76108320</p>
+    <p><i class="fa-solid fa-envelope"></i> a.j.cama.srl@gmail.com</p>
+    <h3>Cobija</h3>
+    <p><i class="fa-solid fa-location-dot"></i> Oficina<br>
+    Plaza km3/ Jaime Paz Zamora, calle Eliseo Aguilar</p>
+    <p><i class="fa-solid fa-phone"></i> +591 76108320</p>
+    <p><i class="fa-solid fa-envelope"></i> a.j.cama.srl@gmail.com</p>
+    <h2 style="color: #004080;">CAMA S.R.L.</h2>
+    <p>
+      Es una empresa técnica especializada, que provee servicios y productos de alta calidad, cuenta con un plantel de profesionales altamente calificados, además se ha provisto con equipamiento y tecnología de punta; además de soluciones integrales para la satisfacción de nuestros clientes.
+    </p>
+  </aside>
+</main>
+  <div id="footer-container"></div>
+<a href="https://wa.me/59176108320" class="whatsapp-button" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+<script>
+    async function cargarHTML(id, archivo) {
+      const respuesta = await fetch(archivo);
+      const contenido = await respuesta.text();
+      document.getElementById(id).innerHTML = contenido;
+      if (id === "header-container") {
+        const actual = window.location.pathname.split("/").pop();
+        setTimeout(() => {
+          document.querySelectorAll("nav a").forEach(link => {
+            const destino = link.getAttribute("href").split("/").pop();
+            if (destino === actual || (actual === "" && destino === "index.html")) {
+              link.classList.add("activo");
+            }
+          });
+        }, 10);
+      }
+    }
+    cargarHTML("header-container", "../partials/header.html");
+    cargarHTML("footer-container", "../partials/footer.html");
+  </script>
+</body>
+</html>
