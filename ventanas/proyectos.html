@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CAMA S.R.L.</title>
+  <link rel="stylesheet" href="../css/estilos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div id="header-container"></div>
+
+  <!-- 🔽 Contenido principal -->
+<main id="main-content">
+  <h2 class="titulo-principal">Trabajos Realizados - CAMA S.R.L.</h2>
+
+  <div class="contenedor-cards">
+    <div class="card">
+      <h3>EPSA</h3>
+      <p>Montaje de Media Tensión de 150Kva e instalación industrial con arrancadores suaves y variadores de frecuencia. Año 2020–2021</p>
+    </div>
+
+    <div class="card">
+      <h3>SISU</h3>
+      <p>Montaje de Media Tensión de 450Kva y servicios eléctricos. Año 2021</p>
+    </div>
+
+    <div class="card">
+      <h3>Fríos Friatos</h3>
+      <p>Montaje de Media Tensión de 75Kva e instalación eléctrica. Año 2021</p>
+    </div>
+
+    <div class="card">
+      <h3>Hacienda Timoto</h3>
+      <p>Proyecto y Montaje de Media Tensión de 20Kva y Baja Tensión. Año 2021</p>
+    </div>
+
+    <div class="card">
+      <h3>Unidad Educativa Madre Nazarea</h3>
+      <p>Montaje de 150Kva y servicios eléctricos completos del colegio. Año 2019–2022</p>
+    </div>
+
+    <div class="card">
+      <h3>Aserradero Manurini</h3>
+      <p>Instalación de Arrancador Suave para motor de 100Hp. Año 2019–2022</p>
+    </div>
+
+    <div class="card">
+      <h3>VI Brigada Aérea - Vivienda Multifamiliar</h3>
+      <p>Montaje de 75Kva y servicios eléctricos para toda la instalación. Año 2019–2021</p>
+    </div>
+
+    <div class="card">
+      <h3>Beneficiadora Palma Seca</h3>
+      <p>Montaje de 150Kva e instalación eléctrica industrial. Año 2019</p>
+    </div>
+
+    <div class="card">
+      <h3>Hacienda Bananal</h3>
+      <p>Proyecto y Montaje de Media Tensión de 20Kva y Baja Tensión.</p>
+    </div>
+
+    <div class="card">
+      <h3>Cerámica ICA</h3>
+      <p>Reacondicionamiento eléctrico, sistema de tierra, protecciones y pararrayos. Año 2020</p>
+    </div>
+
+    <div class="card">
+      <h3>Hospital Henan Messuti Rivera</h3>
+      <p>Montaje de 1800Kva y servicios eléctricos en hospital de tercer nivel. Mantenimiento activo. Año 2018–2021</p>
+    </div>
+  </div>
+</main>
+
+  <div id="footer-container"></div>
+<a href="https://wa.me/59176108320" class="whatsapp-button" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+ <script>
+    async function cargarHTML(id, archivo) {
+      const respuesta = await fetch(archivo);
+      const contenido = await respuesta.text();
+      document.getElementById(id).innerHTML = contenido;
+      if (id === "header-container") {
+        const actual = window.location.pathname.split("/").pop();
+        setTimeout(() => {
+          document.querySelectorAll("nav a").forEach(link => {
+            const destino = link.getAttribute("href").split("/").pop();
+            if (destino === actual || (actual === "" && destino === "index.html")) {
+              link.classList.add("activo");
+            }
+          });
+        }, 10);
+      }
+    }
+
+    cargarHTML("header-container", "../partials/header.html");
+    cargarHTML("footer-container", "../partials/footer.html");
+  </script>
+</body>
+</html>

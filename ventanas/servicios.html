@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CAMA S.R.L.</title>
+  <link rel="stylesheet" href="../css/estilos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div id="header-container"></div>
+  <main id="main-content">
+<section id="servicios">
+  <h2>Nuestros Servicios</h2>
+  <div class="services">
+    <div class="card">
+      <img src="../img/camara.jpg" alt="Instalación de cámaras">
+      <h3>Instalación de Cámaras de Seguridad</h3>
+      <p>Instalamos sistemas de videovigilancia CCTV e IP con DVR/NVR, acceso remoto y soluciones personalizadas para hogares, empresas e instituciones.</p>
+      <p><strong>Marcas:</strong> Hikvision, Dahua, Uniview</p>
+      <a href="../ventanas/contacto.html" class="btn-servicio">Solicitar Servicio</a>
+    </div>
+    <div class="card">
+      <img src="../img/instalacion.jpg" alt="Instalaciones eléctricas">
+      <h3>Instalaciones Eléctricas</h3>
+      <p>Realizamos instalaciones eléctricas industriales, comerciales y residenciales conforme a normas ENDE, con materiales certificados y personal calificado.</p>
+      <p><strong>Normas:</strong> ENDE, NB 777</p>
+      <a href="../ventanas/contacto.html" class="btn-servicio">Solicitar Servicio</a>
+    </div>
+    <div class="card">
+      <img src="../img/venta.jpg" alt="Venta de productos eléctricos">
+      <h3>Venta de Productos Eléctricos</h3>
+      <p>Ofrecemos venta directa de materiales eléctricos: breakers, térmicos, focos LED, cables, canaletas, sensores, contactores y más.</p>
+      <p><strong>Marcas:</strong> ABB, Schneider, Legrand</p>
+      <a href="../ventanas/productos.html" class="btn-servicio">Ver Productos</a>
+    </div>
+    <div class="card">
+      <img src="../img/tablero.jpg" alt="Fabricación de tableros eléctricos">
+      <h3>Fabricación de Tableros Eléctricos</h3>
+      <p>Diseñamos y ensamblamos tableros eléctricos de distribución y control bajo normas NB 777 e IEC 61439. Servicios con pruebas y planos certificados.</p>
+      <p><strong>Normas:</strong> NB 777, IEC 61439</p>
+      <a href="../ventanas/contacto.html" class="btn-servicio">Solicitar Servicio</a>
+    </div>
+  </div>
+</section>
+</main>
+  <div id="footer-container"></div>
+<a href="https://wa.me/59176108320" class="whatsapp-button" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+  <script>
+    async function cargarHTML(id, archivo) {
+      const respuesta = await fetch(archivo);
+      const contenido = await respuesta.text();
+      document.getElementById(id).innerHTML = contenido;
+      if (id === "header-container") {
+        const actual = window.location.pathname.split("/").pop();
+        setTimeout(() => {
+          document.querySelectorAll("nav a").forEach(link => {
+            const destino = link.getAttribute("href").split("/").pop();
+            if (destino === actual || (actual === "" && destino === "index.html")) {
+              link.classList.add("activo");
+            }
+          });
+        }, 10);
+      }
+    }
+    cargarHTML("header-container", "../partials/header.html");
+    cargarHTML("footer-container", "../partials/footer.html");
+  </script>
+</body>
+</html>

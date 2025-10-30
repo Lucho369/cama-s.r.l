@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CAMA S.R.L.</title>
+  <link rel="stylesheet" href="../css/estilos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div id="header-container"></div>
+
+  <!-- 🔽 Contenido principal -->
+<main id="main-content" class="seccion-nosotros">
+
+  <section class="bloque bloque-destacado">
+    <h2><i class="fas fa-bolt"></i> ¿Quiénes Somos?</h2>
+    <p>
+      <strong>CAMA S.R.L.</strong> es una empresa especializada en soluciones eléctricas integrales. Contamos con un equipo técnico multidisciplinario con amplia experiencia en el diseño, fabricación e instalación de tableros eléctricos, cableado estructurado, sistemas de automatización y proyectos eléctricos industriales y residenciales.
+    </p>
+    <p>
+      Nuestros servicios cumplen con los estándares de calidad y seguridad exigidos por la normativa boliviana vigente, incluyendo los requerimientos técnicos de ENDE y otras entidades reguladoras del sector eléctrico.
+    </p>
+  </section>
+
+  <section class="bloques-grid">
+
+    <div class="bloque">
+      <h2><i class="fas fa-bullseye"></i> Misión</h2>
+      <p>
+        Ejecutar proyectos eléctricos seguros, eficientes y sostenibles, brindando soluciones técnicas que cumplan con las normas nacionales e internacionales, adaptadas a las necesidades de cada cliente.
+      </p>
+    </div>
+
+    <div class="bloque">
+      <h2><i class="fas fa-eye"></i> Visión</h2>
+      <p>
+        Ser reconocidos como una empresa líder en ingeniería eléctrica a nivel nacional, destacando por la calidad en la fabricación de tableros eléctricos, cumplimiento normativo y ejecución de proyectos eficientes y seguros.
+      </p>
+    </div>
+
+    <div class="bloque">
+      <h2><i class="fas fa-lightbulb"></i> Valores</h2>
+      <ul class="valores">
+        <li><i class="fas fa-check-circle"></i> Cumplimiento normativo (ENDE, NB 777, IEC)</li>
+        <li><i class="fas fa-check-circle"></i> Seguridad en instalaciones eléctricas</li>
+        <li><i class="fas fa-check-circle"></i> Responsabilidad técnica</li>
+        <li><i class="fas fa-check-circle"></i> Mejora continua</li>
+        <li><i class="fas fa-check-circle"></i> Compromiso con el cliente</li>
+      </ul>
+    </div>
+
+  </section>
+
+</main>
+
+  <!-- 🔼 Fin del contenido principal -->
+
+  <div id="footer-container"></div>
+<a href="https://wa.me/59176108320" class="whatsapp-button" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+  <script>
+    async function cargarHTML(id, archivo) {
+      const respuesta = await fetch(archivo);
+      const contenido = await respuesta.text();
+      document.getElementById(id).innerHTML = contenido;
+
+      // Agregamos esto solo cuando se cargue el header
+      if (id === "header-container") {
+        const actual = window.location.pathname.split("/").pop();
+        setTimeout(() => {
+          document.querySelectorAll("nav a").forEach(link => {
+            const destino = link.getAttribute("href").split("/").pop();
+            if (destino === actual || (actual === "" && destino === "index.html")) {
+              link.classList.add("activo");
+            }
+          });
+        }, 10);
+      }
+    }
+
+    cargarHTML("header-container", "../partials/header.html");
+    cargarHTML("footer-container", "../partials/footer.html");
+  </script>
+</body>
+</html>

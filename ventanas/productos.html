@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CAMA S.R.L. - Productos</title>
+  <link rel="stylesheet" href="../css/estilos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Cargar header y footer dinámicamente -->
+  <div id="header-container"></div>
+
+  <!-- Contenido principal -->
+  <main id="main-content">
+    <section id="productos">
+      <h2>Nuestros Productos</h2>
+      <div class="products" id="productos-container">
+        <!-- Productos se insertarán aquí -->
+      </div>
+      <div class="pagination" id="pagination">
+        <!-- Botones de paginación -->
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-container"></div>
+
+  <!-- Botón WhatsApp -->
+  <a href="https://wa.me/59176108320" class="whatsapp-button" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <script>
+    // Cargar header y footer
+    async function cargarHTML(id, archivo) {
+      const respuesta = await fetch(archivo);
+      const contenido = await respuesta.text();
+      document.getElementById(id).innerHTML = contenido;
+
+      if (id === "header-container") {
+        const actual = window.location.pathname.split("/").pop();
+        setTimeout(() => {
+          document.querySelectorAll("nav a").forEach(link => {
+            const destino = link.getAttribute("href").split("/").pop();
+            if (destino === actual || (actual === "" && destino === "index.html")) {
+              link.classList.add("activo");
+            }
+          });
+        }, 10);
+      }
+    }
+
+    cargarHTML("header-container", "../partials/header.html");
+    cargarHTML("footer-container", "../partials/footer.html");
+
+    // Lógica de productos
+    const productosPorPagina = 8;
+    let paginaActual = 1;
+    let totalPaginas = 0;
+    let todosLosProductos = [];
+
+    async function obtenerProductos() {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      return [
+        { id_producto: 1, cod_producto: "CAB-0025", nom_producto: "Cable Eléctrico 2.5mm", descripcion_producto: "Cable de cobre flexible ideal para instalaciones residenciales.", precio: 125.50, stock: 150, ruta_imagen: "tablero.jpg" },
+        { id_producto: 2, cod_producto: "INT-20A", nom_producto: "Interruptor Termomagnético", descripcion_producto: "Protección para circuitos eléctricos, 20A.", precio: 85.30, stock: 75, ruta_imagen: "interruptor.jpg" },
+        { id_producto: 3, cod_producto: "SOL-0300", nom_producto: "Panel Solar 300W", descripcion_producto: "Panel solar de alta eficiencia, 300W.", precio: 980.00, stock: 25, ruta_imagen: "panel-solar.jpg" },
+        { id_producto: 4, cod_producto: "TRA-5KV", nom_producto: "Transformador 5kVA", descripcion_producto: "Transformador de aislamiento para equipos electrónicos.", precio: 1250.00, stock: 12, ruta_imagen: "transformador.jpg" },
+        { id_producto: 5, cod_producto: "LED-0015", nom_producto: "Lámpara LED 15W", descripcion_producto: "Luz cálida equivalente a 100W incandescente.", precio: 35.90, stock: 300, ruta_imagen: "lampara-led.jpg" },
+        { id_producto: 6, cod_producto: "TUB-0020", nom_producto: "Tubo Conduit PVC 20mm", descripcion_producto: "Para instalaciones eléctricas empotradas.", precio: 18.75, stock: 200, ruta_imagen: "tubo-pvc.jpg" },
+        { id_producto: 7, cod_producto: "SEN-MOV", nom_producto: "Sensor de Movimiento", descripcion_producto: "Sensor de iluminación automática, ángulo 180°.", precio: 65.40, stock: 45, ruta_imagen: "sensor.jpg" },
+        { id_producto: 8, cod_producto: "UPS-1500", nom_producto: "UPS 1500VA", descripcion_producto: "Sistema de alimentación ininterrumpida.", precio: 780.00, stock: 18, ruta_imagen: "ups.jpg" },
+        { id_producto: 9, cod_producto: "MED-DIG", nom_producto: "Medidor de Energía Digital", descripcion_producto: "Pantalla LCD y comunicación RS485.", precio: 320.00, stock: 30, ruta_imagen: "medidor.jpg" },
+        { id_producto: 10, cod_producto: "CAJ-0012", nom_producto: "Caja de Distribución 12c", descripcion_producto: "Caja para 12 circuitos con tapa transparente.", precio: 145.00, stock: 40, ruta_imagen: "caja.jpg" }
+      ];
+    }
+
+    async function mostrarProductos(pagina) {
+      if (todosLosProductos.length === 0) {
+        todosLosProductos = await obtenerProductos();
+        totalPaginas = Math.ceil(todosLosProductos.length / productosPorPagina);
+      }
+
+      const inicio = (pagina - 1) * productosPorPagina;
+      const fin = inicio + productosPorPagina;
+      const productosPagina = todosLosProductos.slice(inicio, fin);
+
+      const contenedor = document.getElementById('productos-container');
+      contenedor.innerHTML = '';
+
+      productosPagina.forEach(producto => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+
+        const imgSrc = producto.ruta_imagen 
+          ? `../img/${producto.ruta_imagen}`
+          : `https://via.placeholder.com/300x200?text=${encodeURIComponent(producto.nom_producto)}`;
+
+        card.innerHTML = `
+          <img src="${imgSrc}" alt="${producto.nom_producto}" onerror="this.src='https://via.placeholder.com/300x200?text=No+imagen'">
+          <div class="product-code">Código: ${producto.cod_producto}</div>
+          <h3 class="product-name">${producto.nom_producto}</h3>
+          <p class="product-description">${producto.descripcion_producto}</p>
+          <div class="product-price">Bs. ${producto.precio.toFixed(2)}</div>
+          <div class="product-stock">Disponibles: ${producto.stock}</div>
+          <a href="#" class="product-detail">Ver Detalles</a>
+        `;
+
+        contenedor.appendChild(card);
+      });
+
+      paginaActual = pagina;
+      actualizarPaginacion();
+    }
+
+    function actualizarPaginacion() {
+      const paginador = document.getElementById('pagination');
+      paginador.innerHTML = '';
+
+      if (totalPaginas <= 1) return;
+
+      const prev = document.createElement('button');
+      prev.innerHTML = '← Anterior';
+      prev.disabled = paginaActual === 1;
+      prev.onclick = () => mostrarProductos(paginaActual - 1);
+      paginador.appendChild(prev);
+
+      for (let i = 1; i <= totalPaginas; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.className = paginaActual === i ? 'active' : '';
+        btn.onclick = () => mostrarProductos(i);
+        paginador.appendChild(btn);
+      }
+
+      const next = document.createElement('button');
+      next.innerHTML = 'Siguiente →';
+      next.disabled = paginaActual === totalPaginas;
+      next.onclick = () => mostrarProductos(paginaActual + 1);
+      paginador.appendChild(next);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      mostrarProductos(paginaActual);
+    });
+  </script>
+</body>
+</html>

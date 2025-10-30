@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CAMA S.R.L.</title>
+  <link rel="stylesheet" href="../css/estilos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> 
+</head>
+<body>
+  <div id="header-container"></div>
+  <div id="main-container"></div>
+  <div id="footer-container"></div>
+  <a href="https://wa.me/59176108320" class="whatsapp-button" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  <script>
+    async function cargarHTML(id, archivo) {
+      try {
+        const respuesta = await fetch(archivo);
+        const contenido = await respuesta.text();
+        document.getElementById(id).innerHTML = contenido;
+        if (id === "header-container") {
+          const actual = window.location.pathname.split("/").pop();
+          setTimeout(() => {
+            document.querySelectorAll("nav a").forEach(link => {
+              const destino = link.getAttribute("href").split("/").pop();
+              if (destino === actual || (actual === "" && destino === "index.html")) {
+                link.classList.add("activo");
+              }
+            });
+          }, 10);
+        }
+      } catch (error) {
+        console.error(`Error al cargar ${archivo}:`, error);
+      }
+    }
+    cargarHTML("header-container", "../partials/header.html");
+    cargarHTML("main-container", "../partials/main.html");
+    cargarHTML("footer-container", "../partials/footer.html");
+  </script>
+</body>
+</html>
